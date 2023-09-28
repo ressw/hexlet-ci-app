@@ -1,8 +1,18 @@
 name: ci
 on: push
-jobs: 
-    build:
-        runs-on: ubuntu-latest
-        steps: 
-            - uses: actions/checkout@v3
-            - run: echo 'Ok'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # - name: Run Snyk to check for vulnerabilities
+      #   uses: snyk/actions/node@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm test
